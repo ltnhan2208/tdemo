@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useRef } from "react";
 import { FaRegHeart } from "react-icons/fa";
 
 interface listItem {
@@ -145,39 +144,6 @@ export default function RecommendedCollection() {
     }
   ];
 
-  const scrollRef = useRef(null);
-  let startX = 0;
-  let scrollLeft = 0;
-  let isDown = false;
-
-  const handleMouseDown = (e) => {
-    const slider = scrollRef.current;
-    if (!slider) return;
-    isDown = true;
-    startX = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-    slider.style.scrollBehavior = "smooth"; // Tắt chế độ scroll smooth trong quá trình kéo
-  };
-
-  const handleMouseLeave = () => {
-    isDown = false;
-  };
-
-  const handleMouseUp = () => {
-    const slider = scrollRef.current;
-    if (!slider) return;
-    isDown = false;
-    slider.style.scrollBehavior = "smooth"; // Bật lại chế độ cuộn mượt sau khi kéo xong
-  };
-
-  const handleMouseMove = (e) => {
-    const slider = scrollRef.current;
-    if (!slider || !isDown) return;
-    e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 0.3; // Giảm tốc độ cuộn
-    slider.scrollLeft = scrollLeft - walk;
-  };
   return (
     <section>
       <div className="w-90 relative left-5-per h-auto flex flex-col items-center">
@@ -248,13 +214,7 @@ export default function RecommendedCollection() {
         </ul>
         <br />
         <div
-          className="h-90-per max-w-full space-x-7 flex flex-row box-border overflow-x-auto scrollbar-hidden"
-          ref={scrollRef}
-          onMouseDown={handleMouseDown}
-          onMouseLeave={handleMouseLeave}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
-        >
+          className="h-90-per max-w-full space-x-7 flex flex-row box-border overflow-x-auto scrollbar-hidden" >
           {listItem2.map((item) => (
             <div key={item.id} className="group h-350-px min-w-60 items-center">
                <div
